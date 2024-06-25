@@ -1,0 +1,54 @@
++------------------+    +-----------------+   +---------------------+
+|    Manufacturer  |    |    Animal       |   |      Customer       |
++------------------+    +-----------------+   +---------------------+
+| manufacturer_id  |    | animal_id       |   | customer_id         |
+| name             |    | name            |   | name                |
++------------------+    +-----------------+   | email               |
+                                               +---------------------+
+                   | 1                                 |
+                   |                                   |
+                   |                                   |
+                   |                                   |
++------------------v-------------+   +-----------------v----------+      +------------------+
+|           Product              |   |    Product_Animal          |      |     Transaction  |
++--------------------------------+   +----------------------------+      +------------------+
+| product_id                     |   | product_id (PK, FK)        |      | transaction_id   |
+| name                           |   | animal_id (PK, FK)         |      | customer_id (FK) |
+| type                           |   +----------------------------+      | date             |
+| manufacturer_id (FK)           |                                      +------------------+
+| weight (nullable)              |                                                |
+| flavor (nullable)              |                                                |
+| target_health_condition (nullable)|                                             |
+| material (nullable)            |                                                |
+| durability (nullable)          |                                                |
+| color (nullable)               |                                                |
+| size (nullable)                |                                                |
+| care_instructions (nullable)   |                                                |
++--------------------------------+                                                |
+                                                                                  |
+                                                                                  |
+                     +--------------------------------------------+  +------------v---------------+
+                     |               Transaction_Product          |  |       Location             |
+                     +--------------------------------------------+  +-----------------------------+
+                     | transaction_id (PK, FK)                    |  | location_id                |
+                     | product_id (PK, FK)                        |  | name                       |
+                     | quantity                                    |  | zip_code                   |
+                     +--------------------------------------------+  +-----------------------------+
+                                                                           |
+                                                                           |
+                                                                +----------v------------+
+                                                                |        Shipment        |
+                                                                +------------------------+
+                                                                | shipment_id            |
+                                                                | origin_id (FK)         |
+                                                                | destination_id (FK)    |
+                                                                +------------------------+
+                                                                           |
+                                                                           |
+                                                           +---------------v--------------+
+                                                           |         Shipment_Product     |
+                                                           +------------------------------+
+                                                           | shipment_id (PK, FK)         |
+                                                           | product_id (PK, FK)          |
+                                                           | quantity                     |
+                                                           +------------------------------+
