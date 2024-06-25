@@ -1,0 +1,57 @@
++--------------------------------------+
+|                Processor             |
++--------------------------------------+
+| - mode: ModeStrategy                 |
+| - database: DatabaseStrategy         |
++--------------------------------------+
+| + configure(mode: ModeIdentifier,    |
+|             database: DatabaseIdentifier): void |
+| + process(dataPoint: DataPoint): void |
++--------------------------------------+
+                |                           |
+                | 1                         | 1
+                |                           |
+                |                           |
+     +-------------------+            +-------------------+
+     |  ModeStrategy     |            | DatabaseStrategy  |
+     +-------------------+            +-------------------+
+     | +process(dataPoint: DataPoint): void  | +connect(): void              |
+     +-------------------+            | +insert(dataPoint: DataPoint): void |
+                                      | +validate(dataPoint: DataPoint): void|
+                                      +-------------------+
+                |
+                |
+     +----------+----------+
+     |                     |
+     |                     |
++-------------+     +-----------------+
+| DumpMode    |     | PassthroughMode |
++-------------+     +-----------------+
+| +process(dataPoint: DataPoint): void |
++-------------+     +-----------------+
+     |
++-------------+
+| ValidateMode |
++-------------+
+| +process(dataPoint: DataPoint): void |
++-------------+
+     
+ +-------------------+       +-----------------+      +--------------+
+| PostgresDatabase  |       | RedisDatabase    |      | ElasticDatabase |
++-------------------+       +-----------------+      +--------------+
+| +connect(): void  |       | +connect(): void|      | +connect(): void |
+| +insert(dataPoint: DataPoint): void | +insert(dataPoint: DataPoint): void | +insert(dataPoint: DataPoint): void |
+| +validate(dataPoint: DataPoint): void | +validate(dataPoint: DataPoint): void | +validate(dataPoint: DataPoint): void |
++-------------------+       +-----------------+      +--------------+
+
++-------------------+
+| ModeIdentifier    |
++-------------------+
+
++-------------------+
+| DatabaseIdentifier|
++-------------------+
+
++-------------------+
+| Datapoint         |
++-------------------+
